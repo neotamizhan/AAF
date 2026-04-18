@@ -15,9 +15,9 @@ function getAuthRedirectOrigin() {
   return window.location.origin;
 }
 
-export function LoginPanel() {
+export function LoginPanel({ initialMessage = "" }: { initialMessage?: string }) {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(initialMessage);
   const [isPending, startTransition] = useTransition();
 
   function signIn(event: FormEvent<HTMLFormElement>) {

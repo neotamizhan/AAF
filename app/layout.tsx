@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Trophy } from "lucide-react";
+import { getCurrentUser } from "@/lib/auth/session";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,9 +17,11 @@ const navItems = [
   { href: "/admin", label: "Admin" }
 ];
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
+  const user = await getCurrentUser();
+
   return (
     <html lang="en">
       <body>
@@ -46,12 +49,28 @@ export default function RootLayout({
                 </Link>
               ))}
             </nav>
-            <Link
-              href="/login"
-              className="focus-ring rounded-md bg-leaf px-3 py-2 text-sm font-semibold text-white hover:bg-leaf/90"
-            >
-              Sign in
-            </Link>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <span className="hidden max-w-40 truncate text-sm font-semibold text-ink/70 sm:inline">
+                  {user.displayName ?? user.email}
+                </span>
+                <form action="/auth/sign-out" method="post">
+                  <button
+                    type="submit"
+                    className="focus-ring rounded-md border border-line bg-white px-3 py-2 text-sm font-semibold text-ink hover:bg-paper"
+                  >
+                    Sign out
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="focus-ring rounded-md bg-leaf px-3 py-2 text-sm font-semibold text-white hover:bg-leaf/90"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </header>
         {children}
