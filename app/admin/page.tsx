@@ -18,7 +18,7 @@ export default async function AdminPage() {
         <section className="mb-5 rounded-lg border border-line bg-white p-5 shadow-panel">
           <h2 className="text-lg font-bold">Restricted operations</h2>
           <p className="mt-2 text-sm leading-6 text-ink/70">
-            Admin imports require a Google-authenticated profile with role admin.
+            Admin imports require an email-authenticated profile with role admin.
             The preview below validates CSV shape but does not write data.
           </p>
         </section>

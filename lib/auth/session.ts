@@ -31,7 +31,11 @@ export async function getCurrentUser(): Promise<AppUser | null> {
   return {
     id: user.id,
     email: data?.email ?? user.email ?? null,
-    displayName: data?.display_name ?? user.user_metadata?.full_name ?? null,
+    displayName:
+      data?.display_name ??
+      user.user_metadata?.full_name ??
+      user.email?.split("@")[0] ??
+      null,
     role: data?.role === "admin" ? "admin" : "user"
   };
 }

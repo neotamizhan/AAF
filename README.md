@@ -23,7 +23,7 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-Google sign-in also requires Google OAuth provider configuration inside Supabase.
+Email magic-link sign-in uses Supabase Auth's built-in email provider. No OAuth client setup is required.
 
 ## Verification
 
@@ -53,7 +53,7 @@ supabase functions serve
 ## Main Routes
 
 - `/` contest overview
-- `/login` Google sign-in
+- `/login` email magic-link sign-in
 - `/contest/tn-2026` dashboard
 - `/contest/tn-2026/constituencies` filters and entry list
 - `/contest/tn-2026/constituency/[id]` prediction entry
@@ -80,5 +80,3 @@ Runtime:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`

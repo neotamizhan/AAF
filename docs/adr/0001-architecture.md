@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The contest needs Google login, protected user predictions, CSV admin imports, final submission locking, and server-side scoring.
+The contest needs email login, protected user predictions, CSV admin imports, final submission locking, and server-side scoring.
 
 ## Decision
 

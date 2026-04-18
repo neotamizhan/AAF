@@ -215,7 +215,11 @@ begin
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'name')
+    coalesce(
+      new.raw_user_meta_data->>'full_name',
+      new.raw_user_meta_data->>'name',
+      split_part(new.email, '@', 1)
+    )
   )
   on conflict (id) do nothing;
   return new;
@@ -411,7 +415,7 @@ group by e.id, e.code, a.id, a.code, a.name, a.sort_order;
 create or replace view public.v_leaderboard_public as
 select
   l.election_id,
-  p.display_name,
+  coalesce(p.display_name, split_part(p.email, '@', 1), 'Contestant') as display_name,
   l.total_score,
   l.vip_hits,
   l.exact_alliance_distribution_hits,

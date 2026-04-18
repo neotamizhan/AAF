@@ -41,7 +41,7 @@ export async function savePredictionAction(
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return { ok: false, message: "Sign in with Google before saving predictions." };
+    return { ok: false, message: "Sign in with email before saving predictions." };
   }
 
   const { error } = await supabase.from("predictions").upsert(
@@ -86,7 +86,7 @@ export async function finalizeSubmissionAction(
   } = await supabase.auth.getSession();
 
   if (!session) {
-    return { ok: false, message: "Sign in with Google before final submission." };
+    return { ok: false, message: "Sign in with email before final submission." };
   }
 
   const { data, error } = await supabase.functions.invoke("finalize-submission", {

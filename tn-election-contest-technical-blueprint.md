@@ -2,7 +2,7 @@
 
 ## 1) Goal
 
-Build a **mobile-friendly web application** where users log in with Google, predict the winning candidate in all **234 Tamil Nadu Assembly constituencies**, and compete on a scoring system once official results are published.
+Build a **mobile-friendly web application** where users log in by email magic link, predict the winning candidate in all **234 Tamil Nadu Assembly constituencies**, and compete on a scoring system once official results are published.
 
 This blueprint is written for:
 - **LLM-assisted development**
@@ -16,7 +16,7 @@ This blueprint is written for:
 ## 2) Product scope
 
 ### Primary user journey
-1. User signs in with Google
+1. User signs in with email
 2. User browses and filters constituencies
 3. User predicts the winner for each constituency
 4. User sees a running seat summary by alliance/block
@@ -52,7 +52,7 @@ For each constituency, a user picks **one predicted winning candidate**.
 After all 234 are predicted, the app should show the number of seats won by each alliance/block.
 
 ### Authentication
-- Google Authentication only
+- Email magic-link authentication only
 
 ### Post-result flow
 After official election results are available:
@@ -75,7 +75,7 @@ After official election results are available:
 
 ## Backend
 - **Supabase Postgres**
-- **Supabase Auth** for Google sign-in
+- **Supabase Auth** for email magic-link sign-in
 - **Supabase Edge Functions** for admin imports, final submission, and score calculation
 
 ## Hosting
@@ -136,7 +136,7 @@ User Browser
    v
 Next.js Web App
    |
-   +--> Supabase Auth (Google login)
+   +--> Supabase Auth (email login)
    |
    +--> Supabase Postgres (master data, predictions, results, leaderboard)
    |
@@ -913,7 +913,7 @@ Purpose:
 - optional countdown to lock time
 
 ### `/login`
-- Google sign-in button
+- email sign-in form
 - short copy about contest and privacy
 
 ## 17.2 Contest pages
@@ -1001,7 +1001,7 @@ Detail page:
 ## 19) Authentication flow
 
 ## 19.1 Sign-in
-- Google OAuth through Supabase Auth
+- Email magic links through Supabase Auth
 
 ## 19.2 Profile creation
 On first login:
@@ -1130,8 +1130,7 @@ Set these in Vercel project envs and/or GitHub as needed:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ### Optional
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
+- none for authentication when using Supabase email magic links
 
 ---
 
@@ -1499,7 +1498,7 @@ Technical constraints:
 - Mobile-first responsive UI
 
 Product constraints:
-- Google login
+- Email magic-link login
 - 234 constituencies
 - filters by name, district, zone, VIP
 - one predicted winner per constituency per user
@@ -1542,7 +1541,7 @@ This will give you:
 ## 30) Reference notes for implementation team
 
 Use official documentation for:
-- Supabase Auth (Google)
+- Supabase Auth (email)
 - Supabase RLS
 - Supabase migrations and Edge Functions
 - GitHub Actions workflow syntax and secrets
