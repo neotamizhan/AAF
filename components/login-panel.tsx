@@ -5,6 +5,16 @@ import { Mail } from "lucide-react";
 import { Button } from "@/components/ui";
 import { getBrowserSupabase } from "@/lib/supabase/browser";
 
+function getAuthRedirectOrigin() {
+  const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
+  if (configuredOrigin) {
+    return configuredOrigin.replace(/\/$/, "");
+  }
+
+  return window.location.origin;
+}
+
 export function LoginPanel() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -24,7 +34,7 @@ export function LoginPanel() {
         return;
       }
 
-      const origin = window.location.origin;
+      const origin = getAuthRedirectOrigin();
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {

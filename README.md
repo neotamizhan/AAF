@@ -21,9 +21,22 @@ The app runs with fixture data when Supabase environment variables are absent. A
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 Email magic-link sign-in uses Supabase Auth's built-in email provider. No OAuth client setup is required.
+
+For production, set `NEXT_PUBLIC_SITE_URL` in Vercel to the public app URL, for example:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://tn-election-predictor.vercel.app
+```
+
+In Supabase Auth URL Configuration, set the Site URL to the same production URL and allow this callback URL:
+
+```text
+https://tn-election-predictor.vercel.app/auth/callback
+```
 
 ## Verification
 
@@ -80,3 +93,4 @@ Runtime:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL`
