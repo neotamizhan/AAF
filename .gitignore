@@ -1,0 +1,12 @@
+.DS_Store
+.env
+.env*.local
+.next
+.turbo
+coverage
+node_modules
+dist
+deployment-url.txt
+tsconfig.tsbuildinfo
+supabase/.branches
+supabase/.temp
