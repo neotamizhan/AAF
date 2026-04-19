@@ -44,7 +44,7 @@ export default async function HomePage() {
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
               </LinkButton>
               <LinkButton href="/login" variant="secondary">
-                Sign in with email
+                Sign in with Google
               </LinkButton>
             </div>
           </div>

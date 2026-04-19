@@ -2,7 +2,7 @@
 
 ## 1) Goal
 
-Build a **mobile-friendly web application** where users log in by email magic link, predict the winning candidate in all **234 Tamil Nadu Assembly constituencies**, and compete on a scoring system once official results are published.
+Build a **mobile-friendly web application** where users log in with Google, predict the winning candidate in all **234 Tamil Nadu Assembly constituencies**, and compete on a scoring system once official results are published.
 
 This blueprint is written for:
 - **LLM-assisted development**
@@ -52,7 +52,7 @@ For each constituency, a user picks **one predicted winning candidate**.
 After all 234 are predicted, the app should show the number of seats won by each alliance/block.
 
 ### Authentication
-- Email magic-link authentication only
+- Google authentication only
 
 ### Post-result flow
 After official election results are available:
@@ -75,7 +75,7 @@ After official election results are available:
 
 ## Backend
 - **Supabase Postgres**
-- **Supabase Auth** for email magic-link sign-in
+- **Supabase Auth** for Google sign-in
 - **Supabase Edge Functions** for admin imports, final submission, and score calculation
 
 ## Hosting
@@ -1001,7 +1001,7 @@ Detail page:
 ## 19) Authentication flow
 
 ## 19.1 Sign-in
-- Email magic links through Supabase Auth
+- Google OAuth through Supabase Auth
 
 ## 19.2 Profile creation
 On first login:
@@ -1130,7 +1130,8 @@ Set these in Vercel project envs and/or GitHub as needed:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ### Optional
-- none for authentication when using Supabase email magic links
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
 
 ---
 
@@ -1498,7 +1499,7 @@ Technical constraints:
 - Mobile-first responsive UI
 
 Product constraints:
-- Email magic-link login
+- Google login
 - 234 constituencies
 - filters by name, district, zone, VIP
 - one predicted winner per constituency per user

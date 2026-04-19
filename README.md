@@ -24,7 +24,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-Email magic-link sign-in uses Supabase Auth's built-in email provider. No OAuth client setup is required.
+Google sign-in uses Supabase Auth's Google provider. Configure the Google OAuth client in Google Cloud and paste the client ID/secret into Supabase.
 
 For production, set `NEXT_PUBLIC_SITE_URL` in Vercel to the public app URL, for example:
 
@@ -66,7 +66,7 @@ supabase functions serve
 ## Main Routes
 
 - `/` contest overview
-- `/login` email magic-link sign-in
+- `/login` Google sign-in
 - `/contest/tn-2026` dashboard
 - `/contest/tn-2026/constituencies` filters and entry list
 - `/contest/tn-2026/constituency/[id]` prediction entry
