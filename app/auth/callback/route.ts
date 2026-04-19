@@ -38,7 +38,11 @@ export async function GET(request: Request) {
   } = await supabase.auth.getUser();
 
   if (user) {
-    await ensureUserProfile(supabase, user);
+    try {
+      await ensureUserProfile(supabase, user);
+    } catch (profileError) {
+      console.error("Profile self-heal failed after auth callback", profileError);
+    }
   }
 
   return NextResponse.redirect(new URL(next, requestUrl.origin));
