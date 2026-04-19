@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ensureUserProfile } from "@/lib/auth/profile";
 import { getServerSupabase } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
@@ -30,6 +31,14 @@ export async function GET(request: Request) {
     const loginUrl = new URL("/login", requestUrl.origin);
     loginUrl.searchParams.set("error", exchangeError.message);
     return NextResponse.redirect(loginUrl);
+  }
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    await ensureUserProfile(supabase, user);
   }
 
   return NextResponse.redirect(new URL(next, requestUrl.origin));

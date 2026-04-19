@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { ensureUserProfile } from "@/lib/auth/profile";
 import { hasSupabaseEnv } from "@/lib/supabase/config";
 import { getServerSupabase } from "@/lib/supabase/server";
 
@@ -42,6 +43,18 @@ export async function savePredictionAction(
 
   if (!user) {
     return { ok: false, message: "Sign in with email before saving predictions." };
+  }
+
+  try {
+    await ensureUserProfile(supabase, user);
+  } catch (error) {
+    return {
+      ok: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Could not create your profile. Please try signing in again."
+    };
   }
 
   const { error } = await supabase.from("predictions").upsert(
