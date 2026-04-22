@@ -54,6 +54,7 @@ export function SeatSummary({
               }
               className="focus-ring rounded-lg border border-line p-4 text-left transition hover:border-ink/30"
               aria-pressed={selectedAllianceId === row.allianceId}
+              aria-label={`View ${row.allianceName} selected candidates`}
             >
               <div className="flex items-center justify-between gap-3">
                 <span
@@ -87,7 +88,7 @@ export function SeatSummary({
       {isInteractive && selectedRow ? (
         <section className="mt-4 rounded-lg border border-line bg-paper p-4">
           <h3 className="text-sm font-bold">
-            {selectedRow.allianceName} · Selected candidates ({selectedCandidates.length})
+            {selectedRow.allianceName} - Selected candidates ({selectedCandidates.length})
           </h3>
           {selectedCandidates.length === 0 ? (
             <p className="mt-2 text-sm text-ink/65">
