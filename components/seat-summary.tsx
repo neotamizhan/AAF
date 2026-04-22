@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { PredictedSelectionsByAlliance, SeatSummaryRow } from "@/lib/types";
+import type {
+  PredictedAllianceSelection,
+  PredictedSelectionsByAlliance,
+  SeatSummaryRow
+} from "@/lib/types";
 
 const colorByAlliance: Record<string, string> = {
   DMK: "bg-ember text-white",
@@ -30,8 +34,16 @@ export function SeatSummary({
     () => rows.find((row) => row.allianceId === selectedAllianceId),
     [rows, selectedAllianceId]
   );
-  const selectedCandidates =
-    (selectedAllianceId && predictedSelectionsByAlliance?.[selectedAllianceId]) ?? [];
+  const selectedCandidates = useMemo<PredictedAllianceSelection[]>(
+    () =>
+      selectedAllianceId
+        ? predictedSelectionsByAlliance?.[selectedAllianceId] ?? []
+        : [],
+    [predictedSelectionsByAlliance, selectedAllianceId]
+  );
+  const detailRegionId = selectedAllianceId
+    ? `alliance-selection-detail-${selectedAllianceId}`
+    : undefined;
 
   return (
     <section className="rounded-lg border border-line bg-white p-5 shadow-panel">
@@ -52,8 +64,16 @@ export function SeatSummary({
                   current === row.allianceId ? null : row.allianceId
                 )
               }
-              className="focus-ring rounded-lg border border-line p-4 text-left transition hover:border-ink/30"
+              className={`focus-ring rounded-lg border p-4 text-left transition hover:border-ink/30 ${
+                selectedAllianceId === row.allianceId
+                  ? "border-ink bg-paper"
+                  : "border-line"
+              }`}
               aria-pressed={selectedAllianceId === row.allianceId}
+              aria-expanded={selectedAllianceId === row.allianceId}
+              aria-controls={
+                selectedAllianceId === row.allianceId ? detailRegionId : undefined
+              }
               aria-label={`View ${row.allianceName} selected candidates`}
             >
               <div className="flex items-center justify-between gap-3">
@@ -86,7 +106,10 @@ export function SeatSummary({
         )}
       </div>
       {isInteractive && selectedRow ? (
-        <section className="mt-4 rounded-lg border border-line bg-paper p-4">
+        <section
+          id={detailRegionId}
+          className="mt-4 rounded-lg border border-line bg-paper p-4"
+        >
           <h3 className="text-sm font-bold">
             {selectedRow.allianceName} - Selected candidates ({selectedCandidates.length})
           </h3>
