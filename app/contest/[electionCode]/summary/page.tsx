@@ -9,6 +9,7 @@ import {
   getElectionByCode,
   getPredictionProgress,
   getUserPredictions,
+  groupPredictedSelectionsByAlliance,
   summarizePredictedSeats
 } from "@/lib/data/adapter";
 
@@ -27,6 +28,10 @@ export default async function SummaryPage({
   ]);
   const progress = await getPredictionProgress(election, catalog);
   const seatSummary = summarizePredictedSeats(alliances, predictions);
+  const predictedSelectionsByAlliance = groupPredictedSelectionsByAlliance(
+    catalog,
+    predictions
+  );
 
   return (
     <Shell>
@@ -42,7 +47,11 @@ export default async function SummaryPage({
       />
       <div className="grid gap-5">
         <ProgressPanel election={election} progress={progress} />
-        <SeatSummary rows={seatSummary} title="Your predicted alliance totals" />
+        <SeatSummary
+          rows={seatSummary}
+          title="Your predicted alliance totals"
+          predictedSelectionsByAlliance={predictedSelectionsByAlliance}
+        />
         <section className="rounded-lg border border-line bg-white p-5 shadow-panel">
           <h2 className="text-lg font-bold">VIP picks</h2>
           <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">

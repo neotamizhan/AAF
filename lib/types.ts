@@ -158,6 +158,17 @@ export type SeatSummaryRow = {
   sortOrder: number;
 };
 
+export type PredictedAllianceSelection = {
+  constituencyId: string;
+  constituencyName: string;
+  candidateName: string;
+};
+
+export type PredictedSelectionsByAlliance = Record<
+  string,
+  PredictedAllianceSelection[]
+>;
+
 export type PredictionProgress = {
   completed: number;
   total: number;
