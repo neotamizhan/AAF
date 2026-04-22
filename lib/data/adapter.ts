@@ -21,6 +21,7 @@ import type {
   ConstituencyCatalogItem,
   Election,
   LeaderboardRow,
+  PredictedSelectionsByAlliance,
   Prediction,
   PredictionProgress,
   SeatSummaryRow,
@@ -274,6 +275,41 @@ export function summarizePredictedSeats(
       sortOrder: alliance.sortOrder
     }))
     .sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+export function groupPredictedSelectionsByAlliance(
+  catalog: ConstituencyCatalogItem[],
+  predictions: Prediction[]
+): PredictedSelectionsByAlliance {
+  const constituencyById = new Map(catalog.map((item) => [item.id, item]));
+  const grouped: PredictedSelectionsByAlliance = {};
+
+  predictions.forEach((prediction) => {
+    if (!prediction.predictedAllianceId) return;
+
+    const constituency = constituencyById.get(prediction.constituencyId);
+    if (!constituency) return;
+
+    const candidate = constituency.candidates.find(
+      (item) => item.candidateId === prediction.predictedCandidateId
+    );
+
+    if (!grouped[prediction.predictedAllianceId]) {
+      grouped[prediction.predictedAllianceId] = [];
+    }
+
+    grouped[prediction.predictedAllianceId].push({
+      constituencyId: constituency.id,
+      constituencyName: constituency.name,
+      candidateName: candidate?.candidateName ?? "Unknown candidate"
+    });
+  });
+
+  Object.values(grouped).forEach((items) => {
+    items.sort((a, b) => a.constituencyName.localeCompare(b.constituencyName));
+  });
+
+  return grouped;
 }
 
 export async function getActualResults(

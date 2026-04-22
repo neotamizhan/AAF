@@ -9,6 +9,7 @@ import {
   getElectionByCode,
   getPredictionProgress,
   getUserPredictions,
+  groupPredictedSelectionsByAlliance,
   summarizePredictedSeats
 } from "@/lib/data/adapter";
 
@@ -27,6 +28,10 @@ export default async function ContestDashboardPage({
   ]);
   const progress = await getPredictionProgress(election, catalog);
   const seatSummary = summarizePredictedSeats(alliances, predictions);
+  const predictedSelectionsByAlliance = groupPredictedSelectionsByAlliance(
+    catalog,
+    predictions
+  );
 
   return (
     <Shell>
@@ -48,7 +53,11 @@ export default async function ContestDashboardPage({
 
       <div className="grid gap-5">
         <ProgressPanel election={election} progress={progress} />
-        <SeatSummary rows={seatSummary} title="Predicted seat summary" />
+        <SeatSummary
+          rows={seatSummary}
+          title="Predicted seat summary"
+          predictedSelectionsByAlliance={predictedSelectionsByAlliance}
+        />
         <section className="rounded-lg border border-line bg-white p-5 shadow-panel">
           <h2 className="text-lg font-bold">Missing constituencies</h2>
           {progress.missing.length === 0 ? (
